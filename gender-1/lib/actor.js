@@ -154,6 +154,10 @@ Crafty.c('Actor', {
     return this;
   },
 
+  text: function(contents) {
+    this.requires('Text').textFont({ size: '20px'}).text(contents);
+  },
+
   // Start moving
   velocity: function(x, y) {
     this.v = { x: x || 0, y: y || 0 };

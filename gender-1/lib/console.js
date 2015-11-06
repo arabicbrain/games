@@ -44,8 +44,11 @@ window.onerror = function(message, url, lineNumber) {
 
 function log(color, message) {
   var html = "<span style='color: " + color + ";'>" + message + "</span><br />";
-  document.getElementById("console").innerHTML += html;
-  scrollToEnd();
+  $dom = document.getElementById("console");
+  if ($dom != null) {
+    $dom.innerHTML += html;
+    scrollToEnd();
+  }
 }
 
 function scrollToEnd() {

@@ -10,7 +10,7 @@ isms = [
   { "arabic": "عَذَابٍ", "english": "a punishment", "gender": "masculine" , "number": "single" },
   { "arabic": "أَلِيمٍ", "english": "painful", "gender": "masculine" , "number": "single" },
   { "arabic": "اللَّهُ", "english": "God", "gender": "masculine" , "number": "single" },
-  /*{ "arabic": "لَوْحٍ", "english": "tablet", "gender": "masculine" , "number": "single" },
+  { "arabic": "لَوْحٍ", "english": "tablet", "gender": "masculine" , "number": "single" },
   { "arabic": "مَحْفُوظٍ", "english": "protected", "gender": "masculine" , "number": "single" },
   { "arabic": "عَيْنٌ", "english": "a river", "gender": "masculine" , "number": "single" },
   { "arabic": "الْإِنْسَانُ", "english": "humankind", "gender": "masculine" , "number": "single" },
@@ -21,7 +21,7 @@ isms = [
   { "arabic": "نَصْرُ", "english": "help", "gender": "masculine" , "number": "single" },
   { "arabic": "لَهَبٍ", "english": "flame", "gender": "masculine" , "number": "single" },
   { "arabic": "فَلَقِ", "english": "daybreak", "gender": "masculine" , "number": "single" },
-  { "arabic": "مَلِكِ", "english": "king", "gender": "masculine" , "number": "single" },*/
+  { "arabic": "مَلِكِ", "english": "king", "gender": "masculine" , "number": "single" },
   { "arabic": "النَّازِ", "english": "the fire", "gender": "feminine" , "number": "single" },
   { "arabic": "نَّاصِيَةِ", "english": "forelock", "gender": "feminine" , "number": "single" },
   { "arabic": "الْأَرْضَ", "english": "the earth", "gender": "feminine" , "number": "single" },

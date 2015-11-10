@@ -6,7 +6,7 @@ Array::shuffle ?= ->
   this
 
 Array::sample ?= (n) ->
-  return this.shuffle()[0..n]
+  return this.shuffle()[0...n]
 
 ### End utils ###
 
@@ -25,6 +25,10 @@ Game =
       data.feminine.push(ism) if ism.number == 'single' && ism.gender == 'feminine'
       i++
 
-    Crafty.e('Actor').text(JSON.stringify(data.feminine.sample(5)))
+    words = data.feminine.sample(5)
+    words.push word for word in data.masculine.sample(5)
+    words.shuffle
+
+    Crafty.e('Actor').text(word.arabic for word in words)
 
 window.addEventListener 'load', Game.start

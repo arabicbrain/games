@@ -1,4 +1,4 @@
-isms = [
+﻿isms = [
   { "arabic": "النَّبَإِ", "english": "news", "gender": "masculine" , "number": "single" },
   { "arabic": "شَيْءٍ", "english": "thing", "gender": "masculine" , "number": "single" },
   { "arabic": "رَبّ", "english": "master", "gender": "masculine" , "number": "single" },
@@ -27,7 +27,7 @@ isms = [
   { "arabic": "الْأَرْضَ", "english": "the earth", "gender": "feminine" , "number": "single" },
   { "arabic": "القيامة", "english": "the standing", "gender": "feminine" , "number": "single" },
   { "arabic": "نَاقَةَ", "english": "camel", "gender": "feminine", "number": "single" },
-  { "arabic": "ٱلۡغَـٰشِيَةِ", "english": "the overwhelming", "gender": "feminine", "number": "single" },
+  { "arabic": "الۡغَـٰشِيَةِ", "english": "the overwhelming", "gender": "feminine", "number": "single" },
   { "arabic": "حَامِيَةً۬", "english": "intensely hot", "gender": "feminine", "number": "single" },
   { "arabic": "خَـٰشِعَةٌ", "english": "humbled", "gender": "feminine", "number": "single" },
   { "arabic": "عَامِلَةٌ۬", "english": "working hard", "gender": "feminine", "number": "single" },

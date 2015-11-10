@@ -31,28 +31,49 @@ Game =
     words = data.feminine.sample(5)
     words.push word for word in data.masculine.sample(5)
     Game.words = words.shuffle()
+    Game.correctWords = 0
 
     button_size = 128
-    Game.arabic = Crafty.e('Actor').move(Game.width / 4, Game.height / 5)
-    Game.translation = Crafty.e('Actor').move(Game.width / 4, Game.height / 3)
+    Game.arabic = Crafty.e('Actor').move(Game.width / 4, Game.height / 5).fontSize(72)
+    Game.translation = Crafty.e('Actor').move(Game.width / 4, Game.height / 3).fontSize(36)
 
     Game.masculineButton = Crafty.e('Actor')
       .move(64, Game.height / 2)
-      .color('#8888ff').text("Masculine").size(button_size, button_size)
+      .color('#8888ff').size(button_size, button_size)
+      .click(() -> return Game.checkAndScoreCurrentWord("masculine"))
 
     Game.feminineButton = Crafty.e('Actor')
       .move(Game.width - 64 - button_size, Game.height / 2)
-      .color("#ffbbbb").text("Feminine").size(button_size, button_size)
+      .color("#ffbbbb").size(button_size, button_size)
+      .click(() -> return Game.checkAndScoreCurrentWord("feminine"))
 
     Game.showRandomWord()
 
   showRandomWord: ->
-    word = Game.words.sample(1)[0]
-    Game.words = Game.words.filter (w) -> w isnt word # remove "word" from Game.words
-    Game.arabic.text(word.arabic)
+    Game.currentWord = Game.words.sample(1)[0]
+    Game.words = Game.words.filter (w) -> w isnt Game.currentWord # remove "word" from Game.words
+    Game.arabic.text(Game.currentWord.arabic)
     Game.arabic.size(Game.width / 2, 72)
 
-    Game.translation.text(word.english)
+    Game.translation.text(Game.currentWord.english)
     Game.translation.size(Game.width / 2, 72)
+
+  checkAndScoreCurrentWord: (selectedGender) ->
+    correct = Game.currentWord.gender is selectedGender
+    Game.correctWords += 1 if correct
+    if Game.isGameOver()
+      Game.showGameOver()
+    else
+      Game.showRandomWord()
+
+  showGameOver: ->
+    Game.arabic.destroy()
+    Game.translation.destroy()
+    Game.masculineButton.destroy()
+    Game.feminineButton.destroy()
+    Crafty.e('Actor').text("Score: #{Game.correctWords * 10}").fontSize(72);
+
+  isGameOver: ->
+    return Game.words.length == 0
 
 window.addEventListener 'load', Game.start

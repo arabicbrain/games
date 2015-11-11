@@ -30,46 +30,54 @@ var Game = {
     Crafty.init(Game.width, Game.height);
     Crafty.background('#ddd');
 
-    var masc = 0;
-    var fem = 0;
+    loadAudio(['assets/audio/right-answer.ogg', 'assets/audio/wrong-answer.ogg'], function() {
+      // TODO: do this automatically in loadAudio
+      Crafty.audio.add("rightAnswer", "assets/audio/right-answer.ogg");
+      Crafty.audio.add("wrongAnswer", "assets/audio/wrong-answer.ogg");
 
-    var data = {
-      masculine: [],
-      feminine: []
-    };
+      var masc = 0;
+      var fem = 0;
 
-    for (var i = 0; i < window.isms.length; i++) {
-      ism = window.isms[i];
-      if (ism.number === 'single' && ism.gender === 'masculine') {
-        data.masculine.push(ism);
+      var data = {
+        masculine: [],
+        feminine: []
+      };
+
+      for (var i = 0; i < window.isms.length; i++) {
+        ism = window.isms[i];
+        if (ism.number === 'single' && ism.gender === 'masculine') {
+          data.masculine.push(ism);
+        }
+        if (ism.number === 'single' && ism.gender === 'feminine') {
+          data.feminine.push(ism);
+        }
       }
-      if (ism.number === 'single' && ism.gender === 'feminine') {
-        data.feminine.push(ism);
+
+      var words = data.feminine.sample(5);
+      var masculineWords = data.masculine.sample(5);
+      for (var i = 0; i < masculineWords.length; i++) {
+        word = masculineWords[i];
+        words.push(word);
       }
-    }
 
-    var words = data.feminine.sample(5);
-    var masculineWords = data.masculine.sample(5);
-    for (var i = 0; i < masculineWords.length; i++) {
-      word = masculineWords[i];
-      words.push(word);
-    }
+      Game.words = words.shuffle();
+      Game.correctWords = 0;
+      var BUTTON_SIZE = 128;
 
-    Game.words = words.shuffle();
-    Game.correctWords = 0;
-    var BUTTON_SIZE = 128;
+      Game.arabic = Crafty.e('Text2').move(Game.width / 4, Game.height / 5).fontSize(72);
+      Game.translation = Crafty.e('Text2').move(Game.width / 4, Game.height / 3).fontSize(36);
 
-    Game.arabic = Crafty.e('Actor').move(Game.width / 4, Game.height / 5).fontSize(72);
-    Game.translation = Crafty.e('Actor').move(Game.width / 4, Game.height / 3).fontSize(36);
+      Game.masculineButton = Crafty.e('Text2, Actor').move(64, Game.height / 2).color('#8888ff').size(BUTTON_SIZE, BUTTON_SIZE).click(function() {
+        Game.checkAndScoreCurrentWord("masculine");
+      });
+      Game.feminineButton = Crafty.e('Text2, Actor').move(Game.width - 64 - BUTTON_SIZE, Game.height / 2).color("#ffbbbb").size(BUTTON_SIZE, BUTTON_SIZE).click(function() {
+        Game.checkAndScoreCurrentWord("feminine");
+      });
 
-    Game.masculineButton = Crafty.e('Actor').move(64, Game.height / 2).color('#8888ff').size(BUTTON_SIZE, BUTTON_SIZE).click(function() {
-      Game.checkAndScoreCurrentWord("masculine");
-    });
-    Game.feminineButton = Crafty.e('Actor').move(Game.width - 64 - BUTTON_SIZE, Game.height / 2).color("#ffbbbb").size(BUTTON_SIZE, BUTTON_SIZE).click(function() {
-      Game.checkAndScoreCurrentWord("feminine");
-    });
+      Game.scoreText = Crafty.e('Text2').text("Score: 0").fontSize(48);
 
-    Game.showRandomWord();
+      Game.showRandomWord();
+    })
   },
 
   showRandomWord: function() {
@@ -79,15 +87,22 @@ var Game = {
       return w !== Game.currentWord;
     });
 
-    Game.arabic.text(Game.currentWord.arabic).size(Game.width / 2, 72);
-    Game.translation.text(Game.currentWord.english).size(Game.width / 2, 72);
+    Game.arabic.text(Game.currentWord.arabic);
+    Game.translation.text(Game.currentWord.english);
   },
 
   checkAndScoreCurrentWord: function(selectedGender) {
     var correct = Game.currentWord.gender === selectedGender;
+
     if (correct) {
       Game.correctWords += 1;
+      Crafty.audio.play("rightAnswer");
+    } else {
+      Crafty.audio.play("wrongAnswer");
     }
+
+    Game.scoreText.text("Score: " + (Game.correctWords * 10));
+
     if (Game.isGameOver()) {
       Game.showGameOver();
     } else {
@@ -100,7 +115,6 @@ var Game = {
     Game.translation.destroy();
     Game.masculineButton.destroy();
     Game.feminineButton.destroy();
-    Crafty.e('Actor').text("Score: " + (Game.correctWords * 10)).fontSize(72);
   },
 
   isGameOver: function() {

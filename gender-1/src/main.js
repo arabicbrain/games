@@ -20,6 +20,12 @@ if (Array.prototype.sample == null) {
   };
 }
 
+if (Array.prototype.contains == null) {
+  Array.prototype.contains = function(item) {
+    return this.indexOf(item) > -1;
+  }
+}
+
 /*** End utils ***/
 
 var Game = {
@@ -48,7 +54,8 @@ var Game = {
         if (ism.number === 'single' && ism.gender === 'masculine') {
           data.masculine.push(ism);
         }
-        if (ism.number === 'single' && ism.gender === 'feminine') {
+        if (ism.number === 'single' && ism.gender === 'feminine' &&
+          (ism.flags == null || !ism.flags.contains('feminineToArabs')) ) {
           data.feminine.push(ism);
         }
       }
@@ -115,6 +122,7 @@ var Game = {
     Game.translation.destroy();
     Game.masculineButton.destroy();
     Game.feminineButton.destroy();
+    Game.scoreText.fontSize(72);
   },
 
   isGameOver: function() {
